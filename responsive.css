@@ -74,8 +74,14 @@ body.nav-open {
   }
 
   /* ヘッダー・ナビ */
+  body.nav-open .header {
+    z-index: 120;
+  }
+
   .nav-toggle {
     display: flex;
+    position: relative;
+    z-index: 122;
     min-width: 44px;
     min-height: 44px;
     align-items: center;
@@ -88,15 +94,14 @@ body.nav-open {
     right: -100%;
     width: min(82vw, 320px);
     height: 100dvh;
-    background: rgba(3, 7, 18, 0.98);
-    backdrop-filter: blur(20px);
+    background: #030712;
     flex-direction: column;
     align-items: flex-start;
     padding: 5rem 2rem 2rem;
     gap: 0.25rem;
     transition: right var(--transition);
     border-left: 1px solid var(--glass-border);
-    z-index: 110;
+    z-index: 121;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
@@ -116,6 +121,8 @@ body.nav-open {
     padding: 0.85rem 0;
     font-size: 0.92rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .nav-toggle.open span:nth-child(1) {
@@ -134,9 +141,8 @@ body.nav-open {
     content: '';
     position: fixed;
     inset: 0;
-    background: rgba(3, 7, 18, 0.72);
+    background: rgba(3, 7, 18, 0.65);
     z-index: 105;
-    backdrop-filter: blur(2px);
   }
 
   /* ヒーロー */

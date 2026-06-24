@@ -853,7 +853,24 @@ if (navToggle && navLinks) {
   });
 
   navLinks.querySelectorAll('a').forEach((link) => {
-    link.addEventListener('click', () => {
+    link.addEventListener('click', (e) => {
+      const href = link.getAttribute('href');
+      if (href?.startsWith('#') && href.length > 1) {
+        const target = document.getElementById(href.slice(1));
+        if (target) {
+          e.preventDefault();
+          setNavOpen(false);
+          closeZonePanel();
+          closeCreatureModal();
+          window.requestAnimationFrame(() => {
+            const header = document.querySelector('.header');
+            const offset = (header?.offsetHeight ?? 0) + 8;
+            const top = target.getBoundingClientRect().top + window.scrollY - offset;
+            window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+          });
+          return;
+        }
+      }
       setNavOpen(false);
       closeZonePanel();
       closeCreatureModal();
