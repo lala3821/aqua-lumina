@@ -1,0 +1,16 @@
+# Render.com デプロイ設定
+# https://dashboard.render.com で GitHub リポジトリを接続してデプロイ
+
+services:
+  - type: web
+    name: aqua-lumina
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      # デプロイ後に Render の URL を設定（例: https://aqua-lumina.onrender.com）
+      - key: SITE_URL
+        sync: false
