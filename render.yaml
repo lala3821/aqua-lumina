@@ -11,6 +11,5 @@ services:
     envVars:
       - key: NODE_VERSION
         value: "20"
-      # デプロイ後に Render の URL を設定（例: https://aqua-lumina.onrender.com）
       - key: SITE_URL
-        sync: false
+        value: https://aqua-lumina.onrender.com

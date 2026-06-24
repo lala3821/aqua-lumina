@@ -109,7 +109,7 @@ async function handleContact(req, res) {
   }
 
   const body = buildFormSubmitPayload(await readBody(req));
-  const origin = `http://127.0.0.1:${PORT}`;
+  const origin = getBaseUrl(req);
 
   try {
     const upstream = await fetch(target, {
@@ -132,9 +132,11 @@ async function handleContact(req, res) {
     }
 
     const ok = data.success === 'true' || data.success === true;
+    const needsActivation = /activation/i.test(data.message || '');
     res.writeHead(ok ? 200 : 502, { 'Content-Type': 'application/json; charset=utf-8' });
     res.end(JSON.stringify({
       ok,
+      needsActivation,
       message: data.message || (ok ? '' : '送信に失敗しました'),
     }));
   } catch {

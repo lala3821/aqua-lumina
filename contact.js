@@ -83,10 +83,18 @@ function initContactForm() {
       }
 
       throw new Error(data.message || 'send_failed');
-    } catch {
+    } catch (err) {
       if (notice) {
         notice.hidden = false;
-        notice.innerHTML = '<p><strong>送信に失敗しました。</strong></p><p><code>npm start</code> でサーバーを起動してから、もう一度お試しください。</p>';
+        const msg = String(err?.message || '');
+        if (msg.includes('Activation')) {
+          notice.innerHTML = '<p><strong>初回の有効化が必要です。</strong></p><p><code>yogenyo134@tapi.re</code> に届いた FormSubmit の「Activate Form」メールのリンクを開いてください（迷惑メールも確認）。有効化後にもう一度送信してください。</p>';
+        } else {
+          const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+          notice.innerHTML = isLocal
+            ? '<p><strong>送信に失敗しました。</strong></p><p><code>npm start</code> でサーバーを起動してから、もう一度お試しください。</p>'
+            : '<p><strong>送信に失敗しました。</strong></p><p>しばらくしてからもう一度お試しください。</p>';
+        }
       }
     } finally {
       if (submitBtn) {
