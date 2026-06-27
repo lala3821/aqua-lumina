@@ -657,6 +657,7 @@ const creatureLocalImages = {
   ゼニガタアザラシ: '生物画像/ゼニガタアザラシ.jpg',
   チョウチョウウオ: '生物画像/チョウチョウオ.jpg',
   ホタルイカ: '生物画像/ホタルイカ.webp',
+  カワウソ: '生物画像/カワウソ.jpg',
   スカンクシュリンプ: '生物画像/スカンクシュリンプ.jpg',
   ベルーガ: '生物画像/ベルーガ.jpg',
   ヨシキリザメ: '生物画像/ヨシキリザメ.jpg',
@@ -682,7 +683,6 @@ const creatureImageFiles = {
   'Pantodon buchholzi': 'Pantodon_buchholzi.jpg',
   'Tursiops truncatus': 'Tursiops_truncatus_01.jpg',
   'Watasenia scintillans': 'Watasenia_scintillans.jpg',
-  'Andrias japonicus': 'Andrias japonicus pair.jpg',
   'Lysmata amboinensis': 'Lysmata_amboinensis.jpg',
   'Delphinapterus leucas': 'Delphinapterus leucas at Vancouver Aquarium.jpg',
   'Carcharhinus dussumieri': 'Carcharhinus dussumieri terengganu.jpg',
@@ -726,6 +726,7 @@ const creatureExtras = {
   ミズクラゲ: '水温18℃管理。ライトショーと同期して発光演出。',
   ジェンツーペンギン: '餌やりショーは10:30 / 13:30 / 16:00。',
   ホタルイカ: '3月〜5月は繁殖期の特別展示を実施。',
+  カワウソ: '15:30のエンリッチメントで餌取りの様子を間近で観察できます。',
 };
 
 function openCreatureModal(card) {
