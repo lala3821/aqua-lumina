@@ -419,16 +419,16 @@ function updateCarousel3D() {
       return;
     }
 
-    const x = offset * spreadX;
-    const z = -absOffset * depthZ;
-    const ry = -offset * rotateStep;
-    const scale = isActive ? 1.06 : 1 - absOffset * 0.065;
+    const x = Math.round(offset * spreadX);
+    const z = isActive ? 0 : -Math.round(absOffset * depthZ);
+    const ry = isActive ? 0 : Math.round(-offset * rotateStep);
+    const scale = isActive ? 1 : Number((1 - absOffset * 0.065).toFixed(3));
 
     item.style.visibility = 'visible';
     item.style.pointerEvents = 'auto';
     item.style.removeProperty('opacity');
     item.style.zIndex = String(120 - absOffset * 10);
-    item.style.transform = `translate3d(${x}px, 0, ${z}px) rotateY(${ry}deg) scale(${scale})`;
+    item.style.transform = `translate3d(${x}px, 0px, ${z}px) rotateY(${ry}deg) scale3d(${scale}, ${scale}, 1)`;
   });
 
   const area = AREAS[carouselIndex];

@@ -1315,34 +1315,17 @@ body.contact-modal-open {
   border: none;
   background: var(--deep);
   cursor: none;
+  opacity: 1;
   transition:
     transform 0.9s cubic-bezier(0.23, 1, 0.32, 1),
-    opacity 0.45s ease,
-    box-shadow 0.4s,
-    filter 0.4s;
-  opacity: 0.5;
-  filter: brightness(0.65);
-  will-change: transform;
+    box-shadow 0.4s;
 }
 
 .carousel-3d-item.is-active {
-  opacity: 1;
-  filter: brightness(1);
   box-shadow: 0 12px 48px rgba(34, 211, 238, 0.22);
 }
 
-.carousel-3d-item.is-near {
-  opacity: 0.88;
-  filter: brightness(0.9);
-}
-
-.carousel-3d-item.is-far {
-  opacity: 0.68;
-  filter: brightness(0.78);
-}
-
 .carousel-3d-item.is-hidden {
-  opacity: 0;
   pointer-events: none;
 }
 
@@ -1351,6 +1334,33 @@ body.contact-modal-open {
   inset: 0;
   background: var(--deep);
   overflow: hidden;
+  transform: translateZ(0);
+}
+
+.carousel-3d-item-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(3, 7, 18, 0.52);
+  opacity: 1;
+  transition: opacity 0.45s ease;
+  pointer-events: none;
+}
+
+.carousel-3d-item.is-active .carousel-3d-item-bg::after {
+  opacity: 0;
+}
+
+.carousel-3d-item.is-near .carousel-3d-item-bg::after {
+  opacity: 0.72;
+}
+
+.carousel-3d-item.is-far .carousel-3d-item-bg::after {
+  opacity: 0.88;
+}
+
+.carousel-3d-item.is-hidden .carousel-3d-item-bg::after {
+  opacity: 1;
 }
 
 .carousel-3d-item-bg img {
@@ -1359,6 +1369,12 @@ body.contact-modal-open {
   object-fit: cover;
   object-position: center;
   display: block;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.carousel-3d-item.is-active .carousel-3d-item-bg img {
+  transform: translate3d(0, 0, 0.1px);
 }
 
 .carousel-3d-item-bg[data-depth="tunnel"] {
