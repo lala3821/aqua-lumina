@@ -390,10 +390,26 @@ function getWrappedOffset(index, activeIndex, count) {
   return offset;
 }
 
+let carouselHasInitialized = false;
+
+function scheduleCarouselSettle() {
+  carouselItems.forEach((item) => {
+    if (item._settleTimer) clearTimeout(item._settleTimer);
+  });
+
+  const active = carouselItems.find((item) => item.classList.contains('is-active'));
+  if (!active) return;
+
+  active._settleTimer = window.setTimeout(() => {
+    if (active.classList.contains('is-active')) {
+      active.classList.add('is-settled');
+    }
+  }, 920);
+}
+
 function updateCarousel3D() {
   const count = AREAS.length;
   const spreadX = getCarouselSpread();
-  const depthZ = window.innerWidth < 768 ? 90 : 130;
   const rotateStep = window.innerWidth < 768 ? 48 : 56;
   const visibleRange = getCarouselVisibleRange();
 
@@ -406,6 +422,7 @@ function updateCarousel3D() {
     const isNear = absOffset === 1;
     const isFar = absOffset === 2;
 
+    item.classList.remove('is-settled');
     item.classList.toggle('is-active', isActive);
     item.classList.toggle('is-near', isNear);
     item.classList.toggle('is-far', isFar);
@@ -420,7 +437,6 @@ function updateCarousel3D() {
     }
 
     const x = Math.round(offset * spreadX);
-    const z = isActive ? 0 : -Math.round(absOffset * depthZ);
     const ry = isActive ? 0 : Math.round(-offset * rotateStep);
     const scale = isActive ? 1 : Number((1 - absOffset * 0.065).toFixed(3));
 
@@ -428,8 +444,21 @@ function updateCarousel3D() {
     item.style.pointerEvents = 'auto';
     item.style.removeProperty('opacity');
     item.style.zIndex = String(120 - absOffset * 10);
-    item.style.transform = `translate3d(${x}px, 0px, ${z}px) rotateY(${ry}deg) scale3d(${scale}, ${scale}, 1)`;
+    if (isActive) {
+      item.style.transform = 'translate3d(0px, 0px, 0px) rotateY(0deg) scale3d(1, 1, 1)';
+    } else {
+      item.style.transform = `translate3d(${x}px, 0px, 0px) rotateY(${ry}deg) scale3d(${scale}, ${scale}, 1)`;
+    }
   });
+
+  if (!carouselHasInitialized) {
+    carouselHasInitialized = true;
+    carouselItems.forEach((item) => {
+      if (item.classList.contains('is-active')) item.classList.add('is-settled');
+    });
+  } else {
+    scheduleCarouselSettle();
+  }
 
   const area = AREAS[carouselIndex];
   carouselInfo.querySelector('.carousel-info-id').textContent = area.id;
@@ -917,7 +946,7 @@ filterBtns.forEach((btn) => {
 
 // ===== Scroll reveal =====
 const revealElements = document.querySelectorAll(
-  '.section-header, .about-text, .about-visual, .feature-card, .carousel-3d, .creature-card, .schedule-board, .visit-grid > *, .visitor-rules, .interior-gate-content, .shop-feature, .contact-cta'
+  '.section-header, .about-text, .about-visual, .feature-card, .creature-card, .schedule-board, .visit-grid > *, .visitor-rules, .interior-gate-content, .shop-feature, .contact-cta'
 );
 
 revealElements.forEach((el) => el.classList.add('reveal'));

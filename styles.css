@@ -1285,8 +1285,7 @@ body.contact-modal-open {
   margin-left: calc(50% - 50vw);
   height: max(var(--carousel-card-h), 220px);
   min-height: 220px;
-  perspective: 2400px;
-  perspective-origin: 50% 50%;
+  perspective: none;
   overflow: visible;
   margin-bottom: 2rem;
 }
@@ -1297,7 +1296,7 @@ body.contact-modal-open {
   top: 50%;
   width: 0;
   height: 0;
-  transform-style: preserve-3d;
+  transform-style: flat;
 }
 
 .carousel-3d-item {
@@ -1308,7 +1307,6 @@ body.contact-modal-open {
   height: var(--carousel-card-h);
   margin-left: calc(var(--carousel-card-w) / -2);
   margin-top: calc(var(--carousel-card-h) / -2);
-  transform-style: preserve-3d;
   backface-visibility: hidden;
   border-radius: var(--radius);
   overflow: hidden;
@@ -1323,6 +1321,12 @@ body.contact-modal-open {
 
 .carousel-3d-item.is-active {
   box-shadow: 0 12px 48px rgba(34, 211, 238, 0.22);
+  z-index: 120;
+}
+
+.carousel-3d-item.is-active.is-settled {
+  transition: box-shadow 0.4s;
+  transform: translate3d(0px, 0px, 0px) !important;
 }
 
 .carousel-3d-item.is-hidden {
@@ -1374,7 +1378,14 @@ body.contact-modal-open {
 }
 
 .carousel-3d-item.is-active .carousel-3d-item-bg img {
-  transform: translate3d(0, 0, 0.1px);
+  transform: translate3d(0, 0, 0);
+  image-rendering: auto;
+}
+
+.carousel-3d.reveal,
+.carousel-3d.reveal.visible {
+  opacity: 1;
+  transform: none;
 }
 
 .carousel-3d-item-bg[data-depth="tunnel"] {
